@@ -5,14 +5,14 @@ import os
 app = Flask(__name__)
 
 # Oneness network configuration
-ONENESS_URL = "https://u1ya1ctwrr:6CJgFceo9uCbYNrA8LHUFA1mNI1K-0w1jYDC6XwL8ks@u1rvejyoym-u1ao88tlma-rpc.us1-azure.kaleido.io/"
-CHAIN_ID = 989898666
-ACCOUNTS = ["4dcc19ef6f937fe9a0f30d2e398d23682fa2696763d6c160d067f93bd6dbbfdf"]
+ONENESS_URL = os.environ.get("ONENESS_URL", "https://u1ya1ctwrr:6CJgFceo9uCbYNrA8LHUFA1mNI1K-0w1jYDC6XwL8ks@u1rvejyoym-u1ao88tlma-rpc.us1-azure.kaleido.io/")
+CHAIN_ID = int(os.environ.get("CHAIN_ID", 989898666))
+ACCOUNTS = os.environ.get("ACCOUNTS", ["4dcc19ef6f937fe9a0f30d2e398d23682fa2696763d6c160d067f93bd6dbbfdf"])
 
 # Initialize Web3
 web3 = Web3(Web3.HTTPProvider(ONENESS_URL))
 
-if not web3.isConnected():
+if not web3.is_connected():
     raise Exception("Failed to connect to the Oneness network.")
 
 @app.route('/total_supply', methods=['GET'])
